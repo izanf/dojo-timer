@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import AddParticipant from './AddParticipant'
+
 const Container = styled.div`
   flex: 1;
   background: #EA4335;
@@ -36,28 +38,36 @@ const Item = styled(ListItem).attrs({ as: 'span' })`
   line-height: 28px;
 `
 
-const Participants = ({ participants, curr }) => {
-  
+const ParticipantsContainer = styled.div``
+
+const Participants = ({ participants, addParticipant }) => {
+  const pilot = participants.shift()
+  const copilot = participants.shift()
+  const next = participants.shift()
+
   return (
     <Container>
-      <Header>Participantes</Header>
-      <ItemContainer>
-        <Title>Piloto:</Title>
-        <Item>{curr.pilot}</Item>
-      </ItemContainer>
-      <ItemContainer>
-        <Title>Co-piloto:</Title>
-        <Item>{curr.copilot}</Item>
-      </ItemContainer>
-      <ItemContainer>
-        <Title>Proximo:</Title>
-        <Item>{participants[0]}</Item>
-      </ItemContainer>
-      <List>
-        {participants.slice(1, participants.length).map(item => (
-          <ListItem key={item}>{item}</ListItem>
-        ))}
-      </List>
+      <ParticipantsContainer>
+        <Header>Participantes</Header>
+        <ItemContainer>
+          <Title>Piloto:</Title>
+          <Item>{pilot}</Item>
+        </ItemContainer>
+        <ItemContainer>
+          <Title>Co-piloto:</Title>
+          <Item>{copilot}</Item>
+        </ItemContainer>
+        <ItemContainer>
+          <Title>Proximo:</Title>
+          <Item>{next}</Item>
+        </ItemContainer>
+        <List>
+          {participants.map(item => (
+            <ListItem key={item}>{item}</ListItem>
+          ))}
+        </List>
+      </ParticipantsContainer>
+      <AddParticipant onAdd={addParticipant} />
     </Container>
   )
 }

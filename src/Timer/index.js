@@ -2,7 +2,6 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import Counter from './Counter'
 import Participants from './Participants'
-import data from '../participants.json'
 
 const Container = styled.div`
   display: flex;
@@ -11,25 +10,31 @@ const Container = styled.div`
 `
 
 const Timer = () => {
-  const randomizedData = data.sort(() => Math.random() - 0.5)
-  const [curr, setCurr] = useState({ pilot: randomizedData[0], copilot: randomizedData[1] })
-  const [participants, setParticipants] = useState(randomizedData.slice(2, randomizedData.length))
+  // const randomizedData = data.sort(() => Math.random() - 0.5)
+  // const [curr, setCurr] = useState({ pilot: randomizedData[0], copilot: randomizedData[1] })
+  const [participants, setParticipants] = useState([])
   const time = new Date();
 
-  time.setSeconds(time.getSeconds() + 300);
+  console.log('ssssss', participants)
 
-  const getNext = () => {
-    const nextCopilot = participants.shift()
+  time.setSeconds(time.getSeconds() + 300);  
+
+  // const getNext = () => {
+  //   const nextCopilot = participants.shift()
     
-    setParticipants([...participants, curr.pilot])
-    setCurr({ pilot: curr.copilot, copilot: nextCopilot })
+  //   setParticipants([...participants, curr.pilot])
+  //   setCurr({ pilot: curr.copilot, copilot: nextCopilot })
+  // }
+
+  const addParticipant = (participant) => {
+    setParticipants([...participants, participant])
   }
 
   return (
     <Container>
       {/* <button onClick={getNext}></button> */}
-      <Counter expiryTimestamp={time} onExpire={getNext} />
-      <Participants participants={participants} curr={curr} />
+      <Counter expiryTimestamp={time} onExpire={() => console.log('aaaaa')} />
+      <Participants participants={participants} addParticipant={addParticipant} />
     </Container>
   )
 }
