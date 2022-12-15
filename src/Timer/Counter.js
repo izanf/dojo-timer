@@ -17,7 +17,10 @@ const Count = styled.span`
   color: #FBBC05;
 `
 
-const Controls = styled.div``
+const Controls = styled.div`
+  display: flex;
+  gap: 5px;
+`
 
 const Status = styled.span`
   color: white;
@@ -44,9 +47,11 @@ const Counter = ({ expiryTimestamp, onExpire }) => {
 
   return (
     <Container>
-      <Count><span>{minutes}</span>:<span>{seconds}</span></Count>
-      <Status>{isRunning ? 'Contando...' : 'Parado.'}</Status>
-      <Controls style={{ textAlign: 'center' }}>
+      <Count>
+        <span>{formatDigits(minutes)}</span>:<span>{formatDigits(seconds)}</span>
+      </Count>
+      <Status>{isRunning ? "Contando..." : "Parado."}</Status>
+      <Controls style={{ textAlign: "center" }}>
         <Button onClick={onExpire}>Proximo</Button>
         <Button onClick={start}>Iniciar</Button>
         <Button onClick={pause}>Pausar</Button>
@@ -54,7 +59,10 @@ const Counter = ({ expiryTimestamp, onExpire }) => {
         <Button onClick={_restart}>Reiniciar</Button>
       </Controls>
     </Container>
-  )
+  );
 }
 
 export default Counter
+
+const formatDigits = (n) =>
+  n.toLocaleString("pt-BR", { minimumIntegerDigits: 2 });
