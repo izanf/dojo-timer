@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Timer from './Timer';
 import reportWebVitals from './reportWebVitals';
 import './assets/css/reset.css';
 import GlobalStyle from './GlobalStyle';
+import TimerManager from './TimerManager';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <GlobalStyle />
-    <Timer />
+    <TimerManager />
   </React.StrictMode>
 );
 
