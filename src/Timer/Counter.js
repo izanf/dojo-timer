@@ -1,6 +1,9 @@
 import { useTimer } from 'react-timer-hook';
 import styled from 'styled-components'
 
+import { useParticipants } from 'state/participants'
+import getDatePlusMinutes from 'utils/getDatePlusMinutes';
+
 import Button from '../components/Button'
 
 const Container = styled.div`
@@ -28,21 +31,22 @@ const Status = styled.span`
   margin-bottom: 15px;
 `
 
-const Counter = ({ expiryTimestamp, onExpire }) => {
+const Counter = () => {
+  const { getNext } = useParticipants()
+  const expiryTimestamp = getDatePlusMinutes(5)
+
   const {
     seconds,
     minutes,
     isRunning,
     start,
     pause,
-    resume,
     restart,
-  } = useTimer({ expiryTimestamp, onExpire, autoStart: true });
+  } = useTimer({ expiryTimestamp, onExpire: getNext, autoStart: false });
 
   const _restart = () => {
-    const time = new Date();
-    time.setSeconds(time.getSeconds() + 300);
-    restart(time)
+    restart(expiryTimestamp)
+    pause()
   }
 
   return (
@@ -50,12 +54,10 @@ const Counter = ({ expiryTimestamp, onExpire }) => {
       <Count>
         <span>{formatDigits(minutes)}</span>:<span>{formatDigits(seconds)}</span>
       </Count>
-      <Status>{isRunning ? "Contando..." : "Parado."}</Status>
-      <Controls style={{ textAlign: "center" }}>
-        <Button onClick={onExpire}>Proximo</Button>
-        <Button onClick={start}>Iniciar</Button>
-        <Button onClick={pause}>Pausar</Button>
-        <Button onClick={resume}>Continuar</Button>
+      <Status>{isRunning ? 'Contando...' : 'Parado.'}</Status>
+      <Controls style={{ textAlign: 'center' }}>
+        <Button onClick={getNext}>Proximo</Button>
+        <Button onClick={isRunning ? pause : start}>{isRunning ? 'Pausar' : 'Iniciar'}</Button>
         <Button onClick={_restart}>Reiniciar</Button>
       </Controls>
     </Container>

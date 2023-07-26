@@ -5,11 +5,15 @@ import './assets/css/reset.css';
 import GlobalStyle from './GlobalStyle';
 import TimerManager from './TimerManager';
 
+import { ParticipantsProvider } from './state/participants';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <GlobalStyle />
-    <TimerManager />
+    <ParticipantsProvider>
+      <TimerManager />
+    </ParticipantsProvider>
   </React.StrictMode>
 );
 
