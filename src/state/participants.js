@@ -4,12 +4,6 @@ import ACTIONS from 'state/actions'
 
 const ParticipantsContext = React.createContext()
 
-const nextFIFO = (participants) => {
-  const firstItem = participants.shift()
-
-  return [...participants, firstItem]
-}
-
 function participantsReducer(state, action) {
   switch (action.type) {
     case ACTIONS.PARTICIPANTS_ADD: {
@@ -28,7 +22,7 @@ function participantsReducer(state, action) {
     case ACTIONS.PARTICIPANTS_NEXT: {
       return {
         ...state,
-        participants: nextFIFO(state.participants),
+        participants: action?.participants
       }
     }
     case ACTIONS.PARTICIPANTS_RANDOMIZE: {
@@ -60,9 +54,13 @@ function ParticipantsProvider({ children }) {
   }
 
   const getNext = () => {
-    if (state.participants.length < 3) return
+    const { participants } = state
 
-    dispatch({ type: ACTIONS.PARTICIPANTS_NEXT })
+    if (state.participants.length < 3) return
+  
+    const firstItem = participants.shift()
+
+    dispatch({ type: ACTIONS.PARTICIPANTS_NEXT, participants: [...participants, firstItem] })
   }
 
   const randomizeParticipants = () => {
