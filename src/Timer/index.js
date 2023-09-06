@@ -9,6 +9,7 @@ const Container = styled.div`
 `
 
 const Timer = () => {
+
   return (
     <Container>
       {/* <button onClick={getNext}></button> */}

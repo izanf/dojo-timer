@@ -1,8 +1,8 @@
-import { useTimer } from 'react-timer-hook';
 import styled from 'styled-components'
 
 import { useParticipants } from 'state/participants'
-import getDatePlusMinutes from 'utils/getDatePlusMinutes';
+
+import useTimer from 'hooks/useTimer'
 
 import Button from '../components/Button'
 
@@ -32,21 +32,12 @@ const Status = styled.span`
 `
 
 const Counter = () => {
+  const { minutes, seconds, isRunning, start, stop } = useTimer(300)
   const { getNext } = useParticipants()
-  const expiryTimestamp = getDatePlusMinutes(5)
-
-  const {
-    seconds,
-    minutes,
-    isRunning,
-    start,
-    pause,
-    restart,
-  } = useTimer({ expiryTimestamp, onExpire: getNext, autoStart: false });
 
   const _restart = () => {
-    restart(expiryTimestamp)
-    pause()
+    // restart(expiryTimestamp)
+    stop()
   }
 
   return (
@@ -57,7 +48,7 @@ const Counter = () => {
       <Status>{isRunning ? 'Contando...' : 'Parado.'}</Status>
       <Controls style={{ textAlign: 'center' }}>
         <Button onClick={getNext}>Proximo</Button>
-        <Button onClick={isRunning ? pause : start}>{isRunning ? 'Pausar' : 'Iniciar'}</Button>
+        <Button onClick={isRunning ? stop : start}>{isRunning ? 'Pausar' : 'Iniciar'}</Button>
         <Button onClick={_restart}>Reiniciar</Button>
       </Controls>
     </Container>
