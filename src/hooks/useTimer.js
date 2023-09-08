@@ -1,6 +1,6 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
-const useTimer = ({ minutes }) => {
+const useTimer = ({ minutes, onFinish }) => {
   const interval = useRef(null)
   const [time, setTime] = useState(minutes)
   const [isRunning, setIsRunning] = useState(false)
@@ -21,13 +21,25 @@ const useTimer = ({ minutes }) => {
     interval.current = null
     setIsRunning(false)
   }
+
+  const restart = () => {
+    setTime(minutes)
+    stop()
+  }
+
+  useEffect(() => {
+    if (time <= 0) {
+      onFinish?.()
+      restart()
+    }
+  }, [time])
   
   return {
-    minutes: Math.ceil(time / 60),
-    seconds: time,
+    time,
     isRunning,
     start,
-    stop
+    stop,
+    restart
   }
 }
 

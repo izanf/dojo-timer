@@ -1,11 +1,20 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  display: flex;
+  margin-bottom: .5rem;
+`
 
-const Button = styled.button``
+const Button = styled.button`
+  padding: .5rem;
+  margin-left: .5rem;
+`
 
-const Input = styled.input``
+const Input = styled.input`
+  flex: 1;
+  padding: .5rem;
+`
 
 const AddParticipant = ({ onAdd }) => {
   const [name, setName] = useState('')
