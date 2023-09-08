@@ -1,8 +1,8 @@
 import { useParticipants } from 'state/participants'
 
-import useTimer from 'hooks/useTimer'
-
 import Button from '../../components/Button'
+
+import useTimer from 'hooks/useTimer'
 
 import { Container, Count, Controls, Status } from './styles'
 

@@ -1,8 +1,8 @@
-import * as React from 'react'
+import { useReducer, createContext, useContext } from 'react'
 
 import ACTIONS from 'state/actions'
 
-const ParticipantsContext = React.createContext()
+const ParticipantsContext = createContext()
 
 function participantsReducer(state, action) {
   switch (action.type) {
@@ -43,7 +43,7 @@ const INITIAL_STATE = {
 }
 
 function ParticipantsProvider({ children }) {
-  const [state, dispatch] = React.useReducer(participantsReducer, INITIAL_STATE)
+  const [state, dispatch] = useReducer(participantsReducer, INITIAL_STATE)
 
   const addParticipant = (participant) => {
     dispatch({ type: ACTIONS.PARTICIPANTS_ADD, participant })
@@ -56,7 +56,7 @@ function ParticipantsProvider({ children }) {
   const getNext = () => {
     const { participants } = state
 
-    if (state.participants.length < 3) return
+    if (participants.length < 3) return
   
     const firstItem = participants.shift()
 
@@ -79,7 +79,7 @@ function ParticipantsProvider({ children }) {
 }
 
 function useParticipants() {
-  const context = React.useContext(ParticipantsContext)
+  const context = useContext(ParticipantsContext)
 
   if (context === undefined) {
     throw new Error('useParticipants must be used within a ParticipantsProvider')
