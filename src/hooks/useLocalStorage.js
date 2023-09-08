@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
 function useLocalStorage(key, initialState) {
   const [state, setState] = useState(() => {
     try {
-      const storedState = localStorage.getItem(`dojo-timer.${key}`);
+      const storedState = localStorage.getItem(`dojo-timer.${key}`)
       if (!storedState) {
         return initialState;
       }
-      return JSON.parse(storedState);
+      return JSON.parse(storedState)
     } catch {
-      return initialState;
+      return initialState
     }
-  });
+  })
 
   useEffect(() => {
     localStorage.setItem(`dojo-timer.${key}`, JSON.stringify(state));
-  }, [key, state]);
+  }, [key, state])
 
-  return [state, setState];
+  return [state, setState]
 }
 
-export default useLocalStorage;
+export default useLocalStorage

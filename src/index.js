@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import './assets/css/reset.css';
 import GlobalStyle from './GlobalStyle';
-import TimerManager from './TimerManager';
+import Timer from './Timer';
+
+import { ParticipantsProvider } from './state/participants';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <GlobalStyle />
-    <TimerManager />
+    <ParticipantsProvider>
+      <Timer />
+    </ParticipantsProvider>
   </React.StrictMode>
 );
 
