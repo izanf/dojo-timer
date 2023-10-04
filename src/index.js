@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import './assets/css/reset.css';
 import GlobalStyle from './GlobalStyle';
-import Timer from './Timer';
+import Home from './Home';
 
 import { ParticipantsProvider } from './state/participants';
 
@@ -12,7 +12,7 @@ root.render(
   <React.StrictMode>
     <GlobalStyle />
     <ParticipantsProvider>
-      <Timer />
+      <Home />
     </ParticipantsProvider>
   </React.StrictMode>
 );

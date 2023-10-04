@@ -1,4 +1,6 @@
-import { useReducer, createContext, useContext } from 'react'
+import { useReducer, createContext, useContext, useEffect } from 'react'
+
+import { useLocalStorage } from 'hooks'
 
 import ACTIONS from 'state/actions'
 
@@ -43,7 +45,8 @@ const INITIAL_STATE = {
 }
 
 function ParticipantsProvider({ children }) {
-  const [state, dispatch] = useReducer(participantsReducer, INITIAL_STATE)
+  const [storedParticipants, setStoredParticipants] = useLocalStorage('participants', INITIAL_STATE)
+  const [state, dispatch] = useReducer(participantsReducer, storedParticipants)
 
   const addParticipant = (participant) => {
     dispatch({ type: ACTIONS.PARTICIPANTS_ADD, participant })
@@ -66,6 +69,10 @@ function ParticipantsProvider({ children }) {
   const randomizeParticipants = () => {
     dispatch({ type: ACTIONS.PARTICIPANTS_RANDOMIZE })
   }
+
+  useEffect(() => {
+    setStoredParticipants(state)
+  }, [setStoredParticipants, state])
 
   const value = {
     ...state,

@@ -1,8 +1,12 @@
 import styled from 'styled-components'
 
 const Wrapper = styled.li`
-  margin-bottom: .5rem;
-  color: white;
+  color: #333;
+  padding: .5rem 0;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid #333;
+  }
 `
 
 const Title = styled.h4`
@@ -15,6 +19,8 @@ const NameContainer = styled.div`
 
 const Name = styled.span`
   flex: 1;
+  line-height: 1.5rem;
+  font-size: 1.5rem;
 `
 
 const RemoveButton = styled.button`
