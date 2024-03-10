@@ -1,52 +1,21 @@
 import { useReducer, createContext, useContext, useEffect } from 'react'
 
 import { useLocalStorage } from 'hooks'
+import reducer from './reducer'
 
-import ACTIONS from 'state/actions'
+import ACTIONS from './actions'
 
 const ParticipantsContext = createContext()
-
-function participantsReducer(state, action) {
-  switch (action.type) {
-    case ACTIONS.PARTICIPANTS_ADD: {
-      return {
-        ...state,
-        count: state.count + 1,
-        participants: [...state?.participants, { id: state.count, name: action?.participant }],
-      }
-    }
-    case ACTIONS.PARTICIPANTS_REMOVE: {
-      return {
-        ...state,
-        participants: state?.participants?.filter(item => item.id !== action.id)
-      }
-    }
-    case ACTIONS.PARTICIPANTS_NEXT: {
-      return {
-        ...state,
-        participants: action?.participants
-      }
-    }
-    case ACTIONS.PARTICIPANTS_RANDOMIZE: {
-      return {
-        ...state,
-        participants: state.participants.sort(() => Math.random() - 0.5)
-      }
-    }
-    default: {
-      throw new Error(`Unhandled action type: ${action.type}`)
-    }
-  }
-}
 
 const INITIAL_STATE = {
   count: 0,
   participants: []
 }
+const MIN_PARTICIPANTS = 3
 
 function ParticipantsProvider({ children }) {
   const [storedParticipants, setStoredParticipants] = useLocalStorage('participants', INITIAL_STATE)
-  const [state, dispatch] = useReducer(participantsReducer, storedParticipants)
+  const [state, dispatch] = useReducer(reducer, storedParticipants)
 
   const addParticipant = (participant) => {
     dispatch({ type: ACTIONS.PARTICIPANTS_ADD, participant })
@@ -56,10 +25,10 @@ function ParticipantsProvider({ children }) {
     dispatch({ type: ACTIONS.PARTICIPANTS_REMOVE, id })
   }
 
-  const getNext = () => {
+  const nextParticipant = () => {
     const { participants } = state
 
-    if (participants.length < 3) return
+    if (participants.length < MIN_PARTICIPANTS) return
   
     const firstItem = participants.shift()
 
@@ -79,7 +48,7 @@ function ParticipantsProvider({ children }) {
     addParticipant,
     removeParticipant,
     randomizeParticipants,
-    getNext
+    nextParticipant
   }
 
   return <ParticipantsContext.Provider value={value}>{children}</ParticipantsContext.Provider>

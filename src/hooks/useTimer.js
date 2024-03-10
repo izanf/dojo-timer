@@ -1,9 +1,12 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
+
+import { useParticipants } from 'Participants/state'
 
 const useTimer = ({ minutes, onFinish }) => {
   const interval = useRef(null)
   const [time, setTime] = useState(minutes)
   const [isRunning, setIsRunning] = useState(false)
+  const { nextParticipant } = useParticipants()
 
   const decreaseTime = () => {
     setTime((prevTime) => prevTime - 1)
@@ -16,15 +19,20 @@ const useTimer = ({ minutes, onFinish }) => {
     }
   }
 
-  const stop = () => {
+  const stop = useCallback(() => {
     clearInterval(interval.current)
     interval.current = null
     setIsRunning(false)
-  }
+  }, [interval])
 
-  const restart = () => {
+  const restart = useCallback(() => {
     setTime(minutes)
     stop()
+  }, [minutes, stop])
+
+  const getNext = () => {
+    restart()
+    nextParticipant()
   }
 
   useEffect(() => {
@@ -32,14 +40,15 @@ const useTimer = ({ minutes, onFinish }) => {
       onFinish?.()
       restart()
     }
-  }, [time])
+  }, [onFinish, restart, time])
   
   return {
     time,
     isRunning,
     start,
     stop,
-    restart
+    restart,
+    getNext
   }
 }
 

@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
-import { useParticipants } from 'state/participants'
+import { useParticipants } from 'Participants/state'
 
 import Participants from './Participants'
-import Timer from './Timer'
+import Timer from './Timer/Timer'
 
 const Container = styled.div`
   display: flex;

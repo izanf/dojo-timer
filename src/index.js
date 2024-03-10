@@ -5,7 +5,7 @@ import './assets/css/reset.css';
 import GlobalStyle from './GlobalStyle';
 import Home from './Home';
 
-import { ParticipantsProvider } from './state/participants';
+import { ParticipantsProvider } from './Participants/state';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import Button from "./components/Button";
 import useLocalStorage from "./hooks/useLocalStorage";
-import Timer from "./Timer";
+import Timer from "./Timer/Timer";
 
 function TimerManager() {
   const [ready, setReady] = useState(false);

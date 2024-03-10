@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Controls from './Controls'
 import Participant from './Participant'
 
-import { useParticipants } from 'state/participants'
+import { useParticipants } from 'Participants/state'
 
 const Container = styled.div`
   display: flex;
