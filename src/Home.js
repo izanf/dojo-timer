@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 
-import { useParticipants } from 'Participants/state'
-
 import Participants from './Participants'
 import Timer from './Timer/Timer'
 
@@ -10,15 +8,11 @@ const Container = styled.div`
   height: 100%;
 `
 
-const Home = () => {
-  const { getNext } = useParticipants()
-
-  return (
-    <Container>
-      <Participants />
-      <Timer onFinish={getNext} />
-    </Container>
-  )
-}
+const Home = () => (
+  <Container>
+    <Participants />
+    <Timer />
+  </Container>
+)
 
 export default Home
