@@ -6,6 +6,7 @@ const useTimer = ({ minutes, onFinish }) => {
   const interval = useRef(null)
   const [time, setTime] = useState(minutes)
   const [isRunning, setIsRunning] = useState(false)
+  const [isFinished, setIsFinished] = useState(false)
   const { nextParticipant } = useParticipants()
 
   const decreaseTime = () => {
@@ -16,6 +17,7 @@ const useTimer = ({ minutes, onFinish }) => {
     if (!interval.current) {
       interval.current = setInterval(decreaseTime, 1000)
       setIsRunning(true)
+      setIsFinished(false)
     }
   }
 
@@ -37,14 +39,16 @@ const useTimer = ({ minutes, onFinish }) => {
 
   useEffect(() => {
     if (time <= 0) {
+      setIsFinished(true)
       onFinish?.()
       restart()
     }
   }, [onFinish, restart, time])
-  
+
   return {
     time,
     isRunning,
+    isFinished,
     start,
     stop,
     restart,
