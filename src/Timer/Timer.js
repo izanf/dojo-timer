@@ -11,7 +11,7 @@ import { Container, TimeContainer, Time } from './Timer.styles'
 
 const Timer = () => {
   const { nextParticipant } = useParticipants()
-  const { time, isRunning, isFinished, start, stop, restart, getNext } = useTimer({ minutes: 2, nextParticipant })
+  const { time, isRunning, isFinished, start, stop, restart, getNext } = useTimer({ minutes: 300, nextParticipant })
 
   const normalizeTime = (time) => {
     if (String(time).length < 2) return '0' + time
