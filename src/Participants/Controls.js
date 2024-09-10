@@ -33,7 +33,11 @@ const AddParticipant = ({ onAdd, onRandomize }) => {
     <Container>
       <Button full onClick={onRandomize}>Randomize</Button>
       <AddContainer>
-        <Input onChange={(e) => setName(e.target.value)} value={name} />
+        <Input onChange={(e) => setName(e.target.value)} value={name} onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleAdd()
+          }
+        }}/>
         <Button onClick={handleAdd}>Add</Button>
       </AddContainer>
     </Container>
